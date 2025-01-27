@@ -13,7 +13,7 @@ type FieldType = {
   confirmPassword: string;
 };
 
-const RegisterPage: React.FC = () => {
+const ResetPasswordPage: React.FC = () => {
   const navigator = useNavigate();
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
@@ -52,8 +52,8 @@ const RegisterPage: React.FC = () => {
                   marginRight: "10px",
                 }}
               /> */}
-              <span style={{ fontSize: "30px", fontWeight: "bold" }}>
-                ثبت‌ نام
+              <span style={{ fontSize: "25px", fontWeight: "bold" }}>
+                فراموشی رمز عبور{" "}
               </span>
             </Flex>
           }
@@ -74,14 +74,14 @@ const RegisterPage: React.FC = () => {
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
-            <Form.Item<FieldType>
+            {/* <Form.Item<FieldType>
               label="نام"
               name="name"
               wrapperCol={{ offset: 0, span: 24 }}
               rules={[{ required: true, message: "نام خود را وارد نمایید" }]}
             >
               <Input />
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item<FieldType>
               label="نام کاربری"
               name="username"
@@ -92,7 +92,7 @@ const RegisterPage: React.FC = () => {
             >
               <Input />
             </Form.Item>
-            <Form.Item<FieldType>
+            {/* <Form.Item<FieldType>
               label="گذرواژه"
               name="password"
               wrapperCol={{ offset: 0, span: 24 }}
@@ -122,7 +122,7 @@ const RegisterPage: React.FC = () => {
               ]}
             >
               <Input.Password />
-            </Form.Item>
+            </Form.Item> */}
 
             <div style={{ marginBottom: "2rem" }}></div>
 
@@ -132,11 +132,11 @@ const RegisterPage: React.FC = () => {
                 type="primary"
                 htmlType="submit"
                 style={{
-                  width: "30%",
+                  width: "35%",
                   backgroundColor: ColorPalletEnum.Primary,
                 }}
               >
-                ثبت‌ نام
+                دریافت اطلاعات{" "}
               </Button>
             </Form.Item>
           </Form>
@@ -146,4 +146,4 @@ const RegisterPage: React.FC = () => {
   );
 };
 
-export default RegisterPage;
+export default ResetPasswordPage;

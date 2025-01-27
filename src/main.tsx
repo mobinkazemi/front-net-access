@@ -9,7 +9,6 @@ import "./index.css";
 import CommandOnSwitchPage from "./pages/Switches/CommandOnSwitch/CommandOnSwitchPage";
 import UpdateSwitchPage from "./pages/Switches/UpdateSwitch/UpdateSwitchPage";
 import LoginPage from "./pages/Auth/Login/LoginPage";
-import RegisterPage from "./pages/Auth/Register/RegisterPage";
 import SwitchesHardeningPage from "./pages/Switches/Hardening/DetailHardeningPage";
 import HardeningChartsPage from "./pages/Switches/Hardening/HardeningChartsPage";
 import HardeningPrePage from "./pages/Switches/Hardening/HardeningPrePages";
@@ -25,6 +24,7 @@ import UpdateHardeningPage from "./pages/CIS/Hardening/Update/UpdateHardeningPag
 import OSListPage from "./pages/OperatingSystem/List/List";
 import HardeningSummaryDetailPage from "./pages/Switches/Hardening/HardeningSummaryWithDetailsPage";
 import BaseLayout from "./components/BaseLayout";
+import ResetPasswordPage from "./pages/Auth/Register/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -45,8 +45,8 @@ const router = createBrowserRouter([
         element: <LoginPage></LoginPage>,
       },
       {
-        path: ROUTES_ENUM.REGISTER,
-        element: <RegisterPage />,
+        path: ROUTES_ENUM.RESET,
+        element: <ResetPasswordPage />,
       },
       //
       //

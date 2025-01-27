@@ -7,7 +7,7 @@ export enum ROUTES_ENUM {
   // ####################################
   //            AUTH
   LOGIN = "/login",
-  REGISTER = "/register",
+  RESET = "/reset",
 
   //
   //

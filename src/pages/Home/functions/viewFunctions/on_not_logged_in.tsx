@@ -7,7 +7,7 @@ export const contentOfNotLoggedIn = () => {
   const navigator = useNavigate();
 
   const onClickForgotPassword = () => {
-    navigator(ROUTES_ENUM.RESET);
+    navigator(ROUTES_ENUM.LOGIN);
   };
   const onClickLogin = () => {
     navigator(ROUTES_ENUM.LOGIN);

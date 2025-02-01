@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
 import { ROUTES_ENUM } from "./shared/enums/routes.enum";
 import "./index.css";
-import LoginPage from "./pages/Auth/Login/LoginPage";
+import LoginPage from "./pages/Auth/getLoginInfo/getLoginInfo";
 import BaseLayout from "./components/BaseLayout";
 import ResetPasswordPage from "./pages/Auth/resetPassword/ResetPassword";
 

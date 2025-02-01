@@ -6,8 +6,8 @@ interface IResponse {
   message: string;
   token?: string;
 }
-const { method, url } = BACKEND_ROUTES.auth.login;
-export const loginUser = async (values: any): Promise<IResponse> => {
+const { method, url } = BACKEND_ROUTES.auth.requestForLoginInfo;
+export const requestForLoginInfo = async (values: any): Promise<IResponse> => {
   let res;
   try {
     res = await apiClient[method](url, values);

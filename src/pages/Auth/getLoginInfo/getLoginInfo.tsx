@@ -1,26 +1,24 @@
 import React from "react";
 import type { FormProps } from "antd";
 import { Button, Card, Flex, Form, Input, message } from "antd";
-import { loginUser } from "./functions/login-user.function";
-import { TOKEN_KEY_ENUM } from "../../../shared/enums/token.enum";
+import { requestForLoginInfo } from "./functions/requestForLoginInfo";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
 import { ColorPalletEnum } from "../../../shared/enums/colorPallet.enum";
 
 type FieldType = {
-  username?: string;
-  password?: string;
-  remember?: string;
+  name: string;
+  lastName: string;
+  phoneNumber: string;
 };
 
 const LoginPage: React.FC = () => {
   const navigator = useNavigate();
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
-    const response = await loginUser(values);
+    const response = await requestForLoginInfo(values);
 
     if (response.result) {
-      localStorage.setItem(TOKEN_KEY_ENUM.ACCESS, response.token as string);
       message.success(response.message);
       setTimeout(() => {
         navigator(ROUTES_ENUM.HOME);
@@ -39,26 +37,28 @@ const LoginPage: React.FC = () => {
 
   return (
     <>
-      <Flex justify="center" align="center" style={{ marginTop: "10rem" }}>
+      <Flex justify="center" align="center" style={{ marginTop: "2%" }}>
         <Card
           title={
             <Flex align="center" justify="center">
               {/* <img
-                src="/douranLogo.png" // Update this with your logo path
-                alt="Logo"
-                style={{
+                  src="/douranLogo.png" // Update this with your logo path
+                  alt="Logo"
+                  style={{
                   width: "50px",
                   height: "50px",
                   marginRight: "10px",
-                }}
+                  }}
               /> */}
-              <span style={{ fontSize: "30px", fontWeight: "bold" }}>ورود</span>
+              <span style={{ fontSize: "30px", fontWeight: "bold" }}>
+                دریافت اطلاعات
+              </span>
             </Flex>
           }
           bordered={false}
           style={{
             width: 400,
-            height: 350,
+            height: 460,
             borderRadius: "10px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           }}
@@ -74,26 +74,40 @@ const LoginPage: React.FC = () => {
             autoComplete="off"
           >
             <Form.Item<FieldType>
-              label="نام کاربری"
-              name="username"
+              label="نام"
+              name="name"
               wrapperCol={{ offset: 0, span: 24 }}
+              rules={[{ required: true, message: "نام خود را وارد نمایید" }]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item<FieldType>
+              label="نام خانوادگی"
+              wrapperCol={{ offset: 0, span: 24 }}
+              name="lastName"
               rules={[
-                { required: true, message: "نام کاربری خود را وارد نمایید" },
+                { required: true, message: "نام خانوادگی خود را وارد نمایید" },
               ]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="گذرواژه"
+              label="تلفن همراه"
               wrapperCol={{ offset: 0, span: 24 }}
-              name="password"
+              name="phoneNumber"
               rules={[
-                { required: true, message: "رمز عبور خود را وارد نمایید" },
+                { required: true, message: "تلفن همراه خود را وارد نمایید" },
+                {
+                  pattern: /^0\d{10}$/, // Starts with 0 and has exactly 11 digits
+                  message: "فقط اعداد انگلیسی -  شروع با 0",
+                },
               ]}
             >
-              <Input.Password />
+              <Input placeholder="09123456789" maxLength={11} />
             </Form.Item>
+
             <div style={{ marginBottom: "3rem" }}></div>
             <Form.Item style={{ textAlign: "center" }}>
               <Button
@@ -105,7 +119,7 @@ const LoginPage: React.FC = () => {
                   backgroundColor: ColorPalletEnum.Primary,
                 }}
               >
-                ورود
+                دریافت
               </Button>
             </Form.Item>
           </Form>

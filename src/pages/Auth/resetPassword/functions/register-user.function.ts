@@ -5,7 +5,7 @@ interface IResponse {
   result: boolean;
   message: string;
 }
-const { method, url } = BACKEND_ROUTES.auth.register;
+const { method, url } = BACKEND_ROUTES.auth.forgetPassword;
 export const registerUser = async (values: any): Promise<IResponse> => {
   let res;
   try {

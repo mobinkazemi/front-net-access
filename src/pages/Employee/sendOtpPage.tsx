@@ -16,12 +16,13 @@ const { method, url } = BACKEND_ROUTES.auth.sendOtp;
 const SendOtpPage: React.FC = () => {
   const debouncedOnFinish = debounce(async (values) => {
     try {
-      const response = await apiClient[method](url, values);
-      console.log(response);
+      await apiClient[method](url, values);
       message.success("درخواست با موفقیت ارسال شد");
     } catch (error) {
-      console.error(error);
-      message.error("مشکلی پیش آمد، دوباره تلاش کنید");
+      message.error(
+        (error as any)?.response?.data?.detail ||
+          "مشکلی پیش آمد، دوباره تلاش کنید"
+      );
     }
   }, 1000);
 
@@ -38,14 +39,14 @@ const SendOtpPage: React.FC = () => {
           title={
             <Flex align="center" justify="center">
               {/* <img
-              src="/douranLogo.png" // Update this with your logo path
-              alt="Logo"
-              style={{
-              width: "50px",
-              height: "50px",
-              marginRight: "10px",
-              }}
-          /> */}
+            src="/douranLogo.png" // Update this with your logo path
+            alt="Logo"
+            style={{
+            width: "50px",
+            height: "50px",
+            marginRight: "10px",
+            }}
+        /> */}
               <span style={{ fontSize: "30px", fontWeight: "bold" }}>
                 فراموشی اطلاعات ورود{" "}
               </span>

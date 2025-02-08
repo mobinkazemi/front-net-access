@@ -10,14 +10,14 @@ export interface IRoute {
 
 interface IBackendRoutes {
   auth: {
-    requestForLoginInfo: IRoute;
+    guest: IRoute;
     forgetPassword: IRoute;
   };
 }
 
 export const BACKEND_ROUTES: IBackendRoutes = {
   auth: {
-    requestForLoginInfo: {
+    guest: {
       method: "post",
       url: "/users/create",
     },

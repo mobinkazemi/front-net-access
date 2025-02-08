@@ -5,6 +5,9 @@ import { requestForLoginInfo } from "./functions/requestForLoginInfo";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
 import { ColorPalletEnum } from "../../../shared/enums/colorPallet.enum";
+import apiClient from "../../../configs/axios.config";
+import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
+import { debounce } from "lodash";
 
 type FieldType = {
   name: string;
@@ -12,21 +15,38 @@ type FieldType = {
   phoneNumber: string;
 };
 
+const { method, url } = BACKEND_ROUTES.auth.guest;
+/*************  ✨ Codeium Command ⭐  *************/
+/**
+ * LoginPage component renders a login form where users can enter their phone number to receive login information.
+ * 
+ * Features:
+ * - Uses a debounced function to handle form submission, preventing rapid repeated API calls.
+ * - Displays success or error messages based on the result of the API call.
+ * - Validates phone number input to ensure it starts with '0' and is 11 digits long.
+ * - Utilizes Ant Design components for a structured and styled layout.
+ */
+
+/******  91a3685c-96af-4c65-9dc5-5b4aded3c54a  *******/
 const LoginPage: React.FC = () => {
   const navigator = useNavigate();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
-    const response = await requestForLoginInfo(values);
-
-    if (response.result) {
-      message.success(response.message);
-      setTimeout(() => {
-        navigator(ROUTES_ENUM.HOME);
-        window.location.reload();
-      }, 1000);
-    } else {
-      message.error(response.message);
+  const debouncedOnFinish = debounce(async (values) => {
+    try {
+      const response = await apiClient[method](url, values);
+      console.log(response);
+      message.success("درخواست با موفقیت ارسال شد");
+    } catch (error) {
+      console.error(error);
+      message.error("مشکلی پیش آمد، دوباره تلاش کنید");
     }
+  }, 1000); // 1000ms (1 second) debounce delay
+
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
+    const apiResult = apiClient[method](url, values)
+      .then((res) => console.log(res))
+      .catch((res) => console.log(res));
+    console.log(apiResult);
   };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
@@ -51,7 +71,7 @@ const LoginPage: React.FC = () => {
                   }}
               /> */}
               <span style={{ fontSize: "30px", fontWeight: "bold" }}>
-                دریافت اطلاعات
+                دریافت اطلاعات ورود{" "}
               </span>
             </Flex>
           }
@@ -69,30 +89,10 @@ const LoginPage: React.FC = () => {
             wrapperCol={{}}
             style={{ maxWidth: 500, width: "100%" }}
             initialValues={{ remember: true }}
-            onFinish={onFinish}
+            onFinish={debouncedOnFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
-            <Form.Item<FieldType>
-              label="نام"
-              name="name"
-              wrapperCol={{ offset: 0, span: 24 }}
-              rules={[{ required: true, message: "نام خود را وارد نمایید" }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item<FieldType>
-              label="نام خانوادگی"
-              wrapperCol={{ offset: 0, span: 24 }}
-              name="lastName"
-              rules={[
-                { required: true, message: "نام خانوادگی خود را وارد نمایید" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-
             <Form.Item<FieldType>
               label="تلفن همراه"
               wrapperCol={{ offset: 0, span: 24 }}
@@ -100,7 +100,7 @@ const LoginPage: React.FC = () => {
               rules={[
                 { required: true, message: "تلفن همراه خود را وارد نمایید" },
                 {
-                  pattern: /^0\d{10}$/, // Starts with 0 and has exactly 11 digits
+                  pattern: /^0\d{10}$/,
                   message: "فقط اعداد انگلیسی -  شروع با 0",
                 },
               ]}

@@ -6,7 +6,7 @@ import { ColorPalletEnum } from "../../../../shared/enums/colorPallet.enum";
 export const contentOfNotLoggedIn = () => {
   const navigator = useNavigate();
 
-  const onClickForgotPassword = () => {
+  const onClickGuest = () => {
     navigator(ROUTES_ENUM.LOGIN);
   };
   const onClickLogin = () => {
@@ -30,12 +30,12 @@ export const contentOfNotLoggedIn = () => {
             backgroundColor: ColorPalletEnum.Primary,
           }}
         >
-          دریافت اطلاعات ورود{" "}
+          کارمند هستم{" "}
         </Button>
       </div>
       <div>
         <Button
-          onClick={onClickForgotPassword}
+          onClick={onClickGuest}
           type="primary"
           style={{
             width: "10rem",
@@ -44,7 +44,7 @@ export const contentOfNotLoggedIn = () => {
             backgroundColor: ColorPalletEnum.Forgotten_Password,
           }}
         >
-          فراموشی اطلاعات ورود{" "}
+          مهمان هستم{" "}
         </Button>
       </div>
     </Flex>

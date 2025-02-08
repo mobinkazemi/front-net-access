@@ -6,6 +6,6 @@ export enum ROUTES_ENUM {
   //
   // ####################################
   //            AUTH
-  LOGIN = "/login",
-  RESET = "/reset",
+  GUEST = "/guest",
+  EMPLOYEE = "/employee",
 }

@@ -1,9 +1,6 @@
 import React from "react";
 import type { FormProps } from "antd";
 import { Button, Card, Flex, Form, Input, message } from "antd";
-import { requestForLoginInfo } from "./functions/requestForLoginInfo";
-import { useNavigate } from "react-router-dom";
-import { ROUTES_ENUM } from "../../../shared/enums/routes.enum";
 import { ColorPalletEnum } from "../../../shared/enums/colorPallet.enum";
 import apiClient from "../../../configs/axios.config";
 import { BACKEND_ROUTES } from "../../../shared/backendRoutes";
@@ -16,21 +13,8 @@ type FieldType = {
 };
 
 const { method, url } = BACKEND_ROUTES.auth.guest;
-/*************  ✨ Codeium Command ⭐  *************/
-/**
- * LoginPage component renders a login form where users can enter their phone number to receive login information.
- * 
- * Features:
- * - Uses a debounced function to handle form submission, preventing rapid repeated API calls.
- * - Displays success or error messages based on the result of the API call.
- * - Validates phone number input to ensure it starts with '0' and is 11 digits long.
- * - Utilizes Ant Design components for a structured and styled layout.
- */
 
-/******  91a3685c-96af-4c65-9dc5-5b4aded3c54a  *******/
 const LoginPage: React.FC = () => {
-  const navigator = useNavigate();
-
   const debouncedOnFinish = debounce(async (values) => {
     try {
       const response = await apiClient[method](url, values);
@@ -41,13 +25,6 @@ const LoginPage: React.FC = () => {
       message.error("مشکلی پیش آمد، دوباره تلاش کنید");
     }
   }, 1000); // 1000ms (1 second) debounce delay
-
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values: any) => {
-    const apiResult = apiClient[method](url, values)
-      .then((res) => console.log(res))
-      .catch((res) => console.log(res));
-    console.log(apiResult);
-  };
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
     errorInfo

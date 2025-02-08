@@ -7,10 +7,10 @@ export const contentOfNotLoggedIn = () => {
   const navigator = useNavigate();
 
   const onClickGuest = () => {
-    navigator(ROUTES_ENUM.LOGIN);
+    navigator(ROUTES_ENUM.GUEST);
   };
-  const onClickLogin = () => {
-    navigator(ROUTES_ENUM.LOGIN);
+  const onClickEmployee = () => {
+    navigator(ROUTES_ENUM.EMPLOYEE);
   };
 
   return (
@@ -20,7 +20,7 @@ export const contentOfNotLoggedIn = () => {
       </div>{" "}
       <div>
         <Button
-          onClick={onClickLogin}
+          onClick={onClickEmployee}
           type="primary"
           style={{
             width: "10rem",

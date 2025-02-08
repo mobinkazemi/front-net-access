@@ -6,7 +6,6 @@ import { ROUTES_ENUM } from "./shared/enums/routes.enum";
 import "./index.css";
 import LoginPage from "./pages/Auth/getLoginInfo/getLoginInfo";
 import BaseLayout from "./components/BaseLayout";
-import ResetPasswordPage from "./pages/Auth/resetPassword/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -23,12 +22,8 @@ const router = createBrowserRouter([
       //
       // AUTH
       {
-        path: ROUTES_ENUM.LOGIN,
+        path: ROUTES_ENUM.GUEST,
         element: <LoginPage></LoginPage>,
-      },
-      {
-        path: ROUTES_ENUM.RESET,
-        element: <ResetPasswordPage />,
       },
     ],
   },

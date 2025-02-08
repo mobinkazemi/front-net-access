@@ -4,8 +4,8 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
 import { ROUTES_ENUM } from "./shared/enums/routes.enum";
 import "./index.css";
-import LoginPage from "./pages/Auth/getLoginInfo/getLoginInfo";
 import BaseLayout from "./components/BaseLayout";
+import GetLoginInfoForGuest from "./pages/Guest/getLoginInfo";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       // AUTH
       {
         path: ROUTES_ENUM.GUEST,
-        element: <LoginPage></LoginPage>,
+        element: <GetLoginInfoForGuest></GetLoginInfoForGuest>,
       },
     ],
   },

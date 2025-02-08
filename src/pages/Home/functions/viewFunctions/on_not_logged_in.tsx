@@ -10,7 +10,7 @@ export const contentOfNotLoggedIn = () => {
     navigator(ROUTES_ENUM.GUEST);
   };
   const onClickEmployee = () => {
-    navigator(ROUTES_ENUM.EMPLOYEE);
+    navigator(ROUTES_ENUM.EMPLOYEE_OTP);
   };
 
   return (

@@ -6,6 +6,7 @@ import { ROUTES_ENUM } from "./shared/enums/routes.enum";
 import "./index.css";
 import BaseLayout from "./components/BaseLayout";
 import GetLoginInfoForGuest from "./pages/Guest/getLoginInfo";
+import SendOtpPage from "./pages/Employee/sendOtpPage";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES_ENUM.GUEST,
         element: <GetLoginInfoForGuest></GetLoginInfoForGuest>,
+      },
+      {
+        path: ROUTES_ENUM.EMPLOYEE_OTP,
+        element: <SendOtpPage></SendOtpPage>,
       },
     ],
   },

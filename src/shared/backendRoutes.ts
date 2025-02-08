@@ -11,7 +11,7 @@ export interface IRoute {
 interface IBackendRoutes {
   auth: {
     guest: IRoute;
-    forgetPassword: IRoute;
+    sendOtp: IRoute;
   };
 }
 
@@ -21,9 +21,9 @@ export const BACKEND_ROUTES: IBackendRoutes = {
       method: "post",
       url: "/users/create",
     },
-    forgetPassword: {
+    sendOtp: {
       method: "post",
-      url: "/auth/register",
+      url: "/users/sendOTP",
     },
   },
 };

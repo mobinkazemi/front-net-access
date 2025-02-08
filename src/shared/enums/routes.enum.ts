@@ -7,5 +7,5 @@ export enum ROUTES_ENUM {
   // ####################################
   //            AUTH
   GUEST = "/guest",
-  EMPLOYEE = "/employee",
+  EMPLOYEE_OTP = "/employee/send-otp",
 }

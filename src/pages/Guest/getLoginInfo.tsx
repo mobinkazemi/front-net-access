@@ -82,7 +82,11 @@ const GetLoginInfoForGuest: React.FC = () => {
                 },
               ]}
             >
-              <Input placeholder="09123456789" maxLength={11} />
+              <Input
+                style={{ direction: "ltr" }}
+                placeholder="09123456789"
+                maxLength={11}
+              />
             </Form.Item>
 
             <div style={{ marginBottom: "3rem" }}></div>

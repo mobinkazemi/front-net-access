@@ -17,12 +17,13 @@ const { method, url } = BACKEND_ROUTES.auth.guest;
 const GetLoginInfoForGuest: React.FC = () => {
   const debouncedOnFinish = debounce(async (values) => {
     try {
-      const response = await apiClient[method](url, values);
-      console.log(response);
+      await apiClient[method](url, values);
       message.success("درخواست با موفقیت ارسال شد");
     } catch (error) {
-      console.error(error);
-      message.error("مشکلی پیش آمد، دوباره تلاش کنید");
+      message.error(
+        (error as any)?.response?.data?.detail ||
+          "مشکلی پیش آمد، دوباره تلاش کنید"
+      );
     }
   }, 1000); // 1000ms (1 second) debounce delay
 

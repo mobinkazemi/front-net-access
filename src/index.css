@@ -47,6 +47,10 @@ td {
   font-family: "iranSans-ultraLight";
 }
 
+.ant-typography {
+  font-family: "iranSans-ultraLight";
+}
+
 .ant-form-item-explain-error {
   font-family: "iranSans-ultraLight";
   margin-top: 5px;

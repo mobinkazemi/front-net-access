@@ -1,5 +1,5 @@
 import React from "react";
-import type { FormProps } from "antd";
+import type { FormProps, GetProps } from "antd";
 import { Button, Card, Flex, Form, Input, message, Typography } from "antd";
 import { debounce } from "lodash";
 import { BACKEND_ROUTES } from "../../shared/backendRoutes";
@@ -7,6 +7,7 @@ import apiClient from "../../configs/axios.config";
 import { ColorPalletEnum } from "../../shared/enums/colorPallet.enum";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../shared/enums/routes.enum";
+import { AxiosError } from "axios";
 
 type FieldTypeSendOtp = {
   username: string;
@@ -17,33 +18,45 @@ type FieldTypeForgetPassword = {
   phoneNumber: string;
 };
 
+type OTPProps = GetProps<typeof Input.OTP>;
+
 const { method: sendOtpMethod, url: sendOtpUrl } = BACKEND_ROUTES.auth.sendOtp;
 const { method: forgetPasswordMethod, url: forgetPasswordUrl } =
   BACKEND_ROUTES.auth.forgetPassword;
 
 const SendOtpPage: React.FC = () => {
   const navigator = useNavigate();
+  const [cellphone, setCellphone] = React.useState(null);
+  const [otp, setOtp] = React.useState(null);
+
+  const onChangeOtp: OTPProps["onChange"] = (text) => {
+    setOtp(text as any);
+  };
+
   const [showFirstStep, setShowFirstStep] = React.useState(true);
-  let cellphoneNumber: string = "";
   const debouncedOnFinishSendOtp = debounce(async (values) => {
     try {
+      console.log(values);
       await apiClient[sendOtpMethod](sendOtpUrl, values);
-      cellphoneNumber = values.phoneNumber;
+      setCellphone(values.phoneNumber);
       message.success("کد با موفقیت ارسال شد");
       setShowFirstStep(false);
     } catch (error) {
+      console.log((error as AxiosError).response?.data);
       message.error(
         (error as any)?.response?.data?.detail ||
-          "مشکلی پیش آمد، دوباره تلاش کنید"
+          "مشکلی پیش آمد، دوباره تلاش کنید",
+        5
       );
     }
   }, 1000);
 
   const debouncedOnFinishForgetPassword = debounce(async (values) => {
     try {
+      console.log(values);
       await apiClient[forgetPasswordMethod](forgetPasswordUrl, {
-        otp: values.otp,
-        phoneNumber: cellphoneNumber,
+        otp: otp,
+        phoneNumber: cellphone,
       });
       message.success("اطلاعات ورود برای شما پیامک شد");
       navigator(ROUTES_ENUM.HOME);
@@ -130,7 +143,7 @@ marginRight: "10px",
                   { required: true, message: "نام کاربری خود را وارد نمایید" },
                 ]}
               >
-                <Input style={{ direction: "ltr" }} placeholder="cao_***" />
+                <Input style={{ direction: "ltr" }} placeholder="caa_***" />
               </Form.Item>
 
               <div style={{ marginBottom: "3rem" }}></div>
@@ -220,6 +233,7 @@ marginRight: "10px",
                     length={4}
                     style={{ direction: "ltr", textAlign: "center" }}
                     formatter={(str) => str.toUpperCase()}
+                    onChange={onChangeOtp}
                   />
                 </Flex>
               </Form.Item>

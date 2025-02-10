@@ -36,13 +36,11 @@ const SendOtpPage: React.FC = () => {
   const [showFirstStep, setShowFirstStep] = React.useState(true);
   const debouncedOnFinishSendOtp = debounce(async (values) => {
     try {
-      console.log(values);
       await apiClient[sendOtpMethod](sendOtpUrl, values);
       setCellphone(values.phoneNumber);
       message.success("کد با موفقیت ارسال شد");
       setShowFirstStep(false);
     } catch (error) {
-      console.log((error as AxiosError).response?.data);
       message.error(
         (error as any)?.response?.data?.detail ||
           "مشکلی پیش آمد، دوباره تلاش کنید",
@@ -53,7 +51,6 @@ const SendOtpPage: React.FC = () => {
 
   const debouncedOnFinishForgetPassword = debounce(async (values) => {
     try {
-      console.log(values);
       await apiClient[forgetPasswordMethod](forgetPasswordUrl, {
         otp: otp,
         phoneNumber: cellphone,
@@ -70,9 +67,7 @@ const SendOtpPage: React.FC = () => {
 
   const onFinishFailed: FormProps<FieldTypeSendOtp>["onFinishFailed"] = (
     errorInfo
-  ) => {
-    console.log("Failed:", errorInfo);
-  };
+  ) => {};
 
   if (showFirstStep) {
     return (

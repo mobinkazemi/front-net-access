@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import type { FormProps, GetProps } from "antd";
 import { Button, Card, Flex, Form, Input, message, Typography } from "antd";
 import { debounce } from "lodash";
@@ -7,7 +7,6 @@ import apiClient from "../../configs/axios.config";
 import { ColorPalletEnum } from "../../shared/enums/colorPallet.enum";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_ENUM } from "../../shared/enums/routes.enum";
-import { AxiosError } from "axios";
 
 type FieldTypeSendOtp = {
   username: string;
@@ -26,9 +25,41 @@ const { method: forgetPasswordMethod, url: forgetPasswordUrl } =
 
 const SendOtpPage: React.FC = () => {
   const navigator = useNavigate();
-  const [cellphone, setCellphone] = React.useState(null);
+  const [cellphone, setCellphone] = useState(null);
+  const [captcha, setCaptcha] = useState<{ image: string; id: string } | null>(
+    null
+  );
+  const [loadingCaptcha, setLoadingCaptcha] = useState(false);
+
   const [otp, setOtp] = React.useState(null);
 
+  const fetchCaptcha = async () => {
+    const { method, url } = BACKEND_ROUTES.auth.captcha;
+    setLoadingCaptcha(true);
+    try {
+      const response = await apiClient[method](url, {
+        responseType: "blob",
+      });
+
+      const captchaId = response.headers["x-captcha-id"];
+      const imageBlob = response.data;
+      const imageUrl = URL.createObjectURL(imageBlob);
+
+      setCaptcha({ image: imageUrl, id: captchaId });
+    } catch (error) {
+      message.error("مشکلی در دریافت کپچا رخ داد");
+    } finally {
+      setLoadingCaptcha(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCaptcha();
+  }, []);
+
+  const handleRefreshCaptcha = () => {
+    fetchCaptcha();
+  };
   const onChangeOtp: OTPProps["onChange"] = (text) => {
     setOtp(text as any);
   };
@@ -141,6 +172,33 @@ marginRight: "10px",
                 <Input style={{ direction: "ltr" }} placeholder="caa_***" />
               </Form.Item>
 
+              {/* -------------- captcha ------------------ */}
+              {/* CAPTCHA SECTION */}
+              {captcha && (
+                <Flex vertical align="center">
+                  <img
+                    src={captcha.image}
+                    alt="captcha"
+                    style={{ marginBottom: "10px", borderRadius: "5px" }}
+                  />
+                  <Button
+                    type="link"
+                    onClick={handleRefreshCaptcha}
+                    loading={loadingCaptcha}
+                  >
+                    دریافت کپچای جدید
+                  </Button>
+                </Flex>
+              )}
+
+              <Form.Item
+                name="captcha"
+                rules={[{ required: true, message: "کد امنیتی را وارد کنید" }]}
+              >
+                <Input placeholder="کد امنیتی را وارد کنید" />
+              </Form.Item>
+
+              {/* ------------------------- */}
               <div style={{ marginBottom: "3rem" }}></div>
               <Form.Item style={{ textAlign: "center" }}>
                 <Button

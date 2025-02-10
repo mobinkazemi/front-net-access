@@ -13,6 +13,8 @@ interface IBackendRoutes {
     guest: IRoute;
     sendOtp: IRoute;
     forgetPassword: IRoute;
+    captcha: IRoute;
+    validateCaptcha: IRoute;
   };
 }
 
@@ -29,6 +31,14 @@ export const BACKEND_ROUTES: IBackendRoutes = {
     forgetPassword: {
       method: "post",
       url: "/users/forgetPassword",
+    },
+    captcha: {
+      method: "get",
+      url: "/users/captcha",
+    },
+    validateCaptcha: {
+      method: "post",
+      url: "/users/validate_captcha",
     },
   },
 };

@@ -33,33 +33,33 @@ const SendOtpPage: React.FC = () => {
 
   const [otp, setOtp] = React.useState(null);
 
-  const fetchCaptcha = async () => {
-    const { method, url } = BACKEND_ROUTES.auth.captcha;
-    setLoadingCaptcha(true);
-    try {
-      const response = await apiClient[method](url, {
-        responseType: "blob",
-      });
+  // const fetchCaptcha = async () => {
+  //   const { method, url } = BACKEND_ROUTES.auth.captcha;
+  //   setLoadingCaptcha(true);
+  //   try {
+  //     const response = await apiClient[method](url, {
+  //       responseType: "blob",
+  //     });
 
-      const captchaId = response.headers["x-captcha-id"];
-      const imageBlob = response.data;
-      const imageUrl = URL.createObjectURL(imageBlob);
+  //     const captchaId = response.headers["x-captcha-id"];
+  //     const imageBlob = response.data;
+  //     const imageUrl = URL.createObjectURL(imageBlob);
 
-      setCaptcha({ image: imageUrl, id: captchaId });
-    } catch (error) {
-      message.error("مشکلی در دریافت کپچا رخ داد");
-    } finally {
-      setLoadingCaptcha(false);
-    }
-  };
+  //     setCaptcha({ image: imageUrl, id: captchaId });
+  //   } catch (error) {
+  //     message.error("مشکلی در دریافت کپچا رخ داد");
+  //   } finally {
+  //     setLoadingCaptcha(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchCaptcha();
-  }, []);
+  // useEffect(() => {
+  //   fetchCaptcha();
+  // }, []);
 
-  const handleRefreshCaptcha = () => {
-    fetchCaptcha();
-  };
+  // const handleRefreshCaptcha = () => {
+  //   fetchCaptcha();
+  // };
   const onChangeOtp: OTPProps["onChange"] = (text) => {
     setOtp(text as any);
   };
@@ -174,7 +174,7 @@ marginRight: "10px",
 
               {/* -------------- captcha ------------------ */}
               {/* CAPTCHA SECTION */}
-              {captcha && (
+              {/* {captcha && (
                 <Flex vertical align="center">
                   <img
                     src={captcha.image}
@@ -196,7 +196,7 @@ marginRight: "10px",
                 rules={[{ required: true, message: "کد امنیتی را وارد کنید" }]}
               >
                 <Input placeholder="کد امنیتی را وارد کنید" />
-              </Form.Item>
+              </Form.Item> */}
 
               {/* ------------------------- */}
               <div style={{ marginBottom: "3rem" }}></div>
